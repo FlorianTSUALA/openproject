@@ -1,5 +1,3 @@
-#-- encoding: UTF-8
-
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) 2012-2021 the OpenProject GmbH
@@ -28,17 +26,13 @@
 # See docs/COPYRIGHT.rdoc for more details.
 #++
 
-class Notifications::CreateService < ::BaseServices::Create
-  protected
+require 'support/pages/notifications/settings'
 
-  def after_perform(call)
-    super.tap do |super_call|
-      # Explicitly checking for false here as the nil value means that no
-      # notification should be sent at all.
-      if super_call.success? && super_call.result.read_mail == false
-        Mails::NotificationJob
-          .set(wait: Setting.notification_email_delay_minutes.minutes)
-          .perform_later(super_call.result)
+module Pages
+  module My
+    class Notifications < ::Pages::Notifications::Settings
+      def path
+        my_notifications_path
       end
     end
   end

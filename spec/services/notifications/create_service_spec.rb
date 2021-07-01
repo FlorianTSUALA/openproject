@@ -50,7 +50,7 @@ describe Notifications::CreateService, type: :model do
       context 'when mail ought to be send', { with_settings: { notification_email_delay_minutes: 30 } } do
         let(:call_attributes) do
           {
-            read_email: false
+            read_mail: false
           }
         end
 
@@ -69,7 +69,7 @@ describe Notifications::CreateService, type: :model do
       context 'when mail not ought to be send' do
         let(:call_attributes) do
           {
-            read_email: nil
+            read_mail: nil
           }
         end
 
